@@ -1,26 +1,23 @@
 import React from 'react'
-import { Button, Icon, Input, Dropdown, Menu, Switch } from 'antd'
+import { Button } from 'antd'
 
-export default function({
-  shuffle,
-  paintings,
-  animals,
-  search,
-  setColumns,
-  setMargin,
-  columns,
-  margin
-}) {
-  return (
-    <div className="header">
-      <Button type="primary" onClick={shuffle}>
-        Shuffle
+const allCategories = ['paintings', 'animals', 'exhibitions'];
+
+export default ({
+                  shuffle, toggleFilter, categoryList,
+                }) =>
+  <div className="header">
+    {allCategories.map(
+      c => <Button
+        key={c}
+        style={{marginLeft:10}}
+        type={categoryList.includes(c) ? "primary" : "secondary"}
+                   onClick={toggleFilter(c )}>
+        {c.toUpperCase()}
       </Button>
+    )}
 
-      <Button type="primary" onClick={paintings}> Paintings </Button>
-      <Button type="primary" onClick={animals}> Animals </Button>
-
-{/*      <Input
+    {/*      <Input
         style={{ marginLeft: 15, minWidth: 130, maxWidth: 300 }}
         suffix={<Icon type="search" style={{ color: 'rgba(0,0,0,.25)' }} />}
         placeholder="input search text"
@@ -28,7 +25,7 @@ export default function({
       />
 
 */}
-{/*
+    {/*
       <Dropdown
         trigger={['click']}
         overlay={
@@ -61,6 +58,4 @@ export default function({
       </Dropdown>
 */}
 
-    </div>
-  )
-}
+      </div>

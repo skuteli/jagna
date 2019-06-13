@@ -1,14 +1,9 @@
 import 'antd/dist/antd.css'
 import './styles.css'
-import React, { Component, Fragment } from 'react'
+import React from 'react'
 import { render } from 'react-dom'
  
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import lodash from 'lodash'
-import { Icon } from 'antd'
-import data from './data'
-import Header from './Header'
-import { Grid, Slug, Fade } from 'mauerwerk'
 
 import Main from './components/Main';
 import NotFound from './components/NotFound';

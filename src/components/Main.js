@@ -1,21 +1,20 @@
 import 'antd/dist/antd.css'
 import '../styles.css'
-import React, { Component, Fragment } from 'react'
-import { render } from 'react-dom'
+import React, { Component } from 'react'
 import lodash from 'lodash'
 import { Icon } from 'antd'
 import data from '../data'
 import Header from '../Header'
 import { Grid, Slug, Fade } from 'mauerwerk'
-  
+
 
 const Cell = ({ toggle, href, name, thumbnail, height, description, css, maximized }) => (
-  <a href={href}>  
+  <a href={href}>
     <div
       className="cell"
       style={{ backgroundImage: css, cursor: !maximized ? 'pointer' : 'auto' }}
       // onClick={!maximized ? toggle : undefined}
-      >
+    >
       <Fade show={maximized} delay={maximized ? 400 : 0}>
         <div className="details">
           <Slug delay={600}>
@@ -29,7 +28,7 @@ const Cell = ({ toggle, href, name, thumbnail, height, description, css, maximiz
         </div>
       </Fade>
 
-      
+
 
       <Fade
         show={!maximized}
@@ -37,48 +36,55 @@ const Cell = ({ toggle, href, name, thumbnail, height, description, css, maximiz
         enter={{ opacity: 1, transform: 'translate3d(0,0px,0)' }}
         leave={{ opacity: 0, transform: 'translate3d(0,-50px,0)' }}
         delay={maximized ? 0 : 400}>
-         
-          <div className="default"> {name} </div>
-         <img className="thumbnail" src={thumbnail} />
-        
+
+        <div className="default"> {name} </div>
+        <img className="thumbnail" src={thumbnail} />
+
       </Fade>
     </div>
   </a>
 )
 
 class App extends Component {
-  state = { data, columns: 5, margin: 40, filter: '', height: true }
-  search = e => this.setState({ filter: e.target.value })
+  state = { columns: 5, margin: 40, categoryList: [], height: true }
   shuffle = () => this.setState(state => ({ data: lodash.shuffle(state.data) }))
-  
-  paintings = () => this.setState(state => ({ data: lodash.filter(state.data, { 'category': 'paintings' }) }))  
-  animals = () => this.setState(state => ({ data: lodash.filter(state.data, { 'category': 'animals' }) }))  
+
+  toggleFilter = (category) =>
+    () => {
+      if (this.state.categoryList.includes(category)) {
+        this.setState({ categoryList: this.state.categoryList.filter(c => c !== category) })
+      } else {
+        this.setState({ categoryList: [...this.state.categoryList, category] })
+      }
+    }
 
   setColumns = e => this.setState({ columns: parseInt(e.key) })
   setMargin = e => this.setState({ margin: parseInt(e.key) })
 
   render() {
-    const data = this.state.data.filter(
-      d => d.name.toLowerCase().indexOf(this.state.filter) != -1
+    const filteredWorks = data.filter(
+      item => (this.state.categoryList.length > 0)
+        ? this.state.categoryList.filter(c => item.category.includes(c)).length
+        : true
     )
+
+    console.log(this.state.categoryList)
     return (
 
       <div className="main">
-      sdfsdffsdsdfsdffsdsdfsdffsd
         <Header
           {...this.state}
           search={this.search}
           shuffle={this.shuffle}
-          paintings={this.paintings}
-          animals={this.animals}
+          toggleFilter={this.toggleFilter}
           setColumns={this.setColumns}
           setMargin={this.setMargin}
         />
-        
+
         <Grid
           className="grid"
           // Arbitrary data, should contain keys, possibly heights, etc.
-          data={data}
+          data={filteredWorks}
           // Key accessor, instructs grid on how to fet individual keys from the data set
           keys={d => d.name}
           // Can be a fixed value or an individual data accessor
