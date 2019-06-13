@@ -19,8 +19,8 @@ const App = () => {
       */}
          
         <Switch>
-          <Route exact path="/" component={Main} />
-          <Route component={NotFound} />
+          <Route component={Main} />
+          {/*<Route component={NotFound} />*/}
         </Switch>
       
     </Router>

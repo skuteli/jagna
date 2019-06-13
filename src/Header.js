@@ -3,9 +3,7 @@ import { Button } from 'antd'
 
 const allCategories = ['paintings', 'animals', 'exhibitions'];
 
-export default ({
-                  shuffle, toggleFilter, categoryList,
-                }) =>
+export default ({toggleFilter, categoryList}) =>
   <div className="header">
     {allCategories.map(
       c => <Button
