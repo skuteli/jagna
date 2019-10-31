@@ -8,7 +8,7 @@
   "dependencies": {
     "antd": "3.8.0",
     "gh-pages": "^2.0.1",
-    "lodash": "4.17.10",
+    "lodash": "4.17.15",
     "mauerwerk": "2.0.0",
     "react": "16.4.2",
     "react-dom": "16.4.2",
